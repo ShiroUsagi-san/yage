@@ -1,4 +1,4 @@
-use crate::cpu::{instruction::ArithmeticTarget, instruction::Instruction, register::Registers};
+use crate::cpu::register::Registers;
 
 pub struct Cpu {
     registers: Registers,
@@ -28,39 +28,8 @@ impl Cpu {
         if self.is_halted {
             return;
         }
-        let instruction_byte = self.memory.read_byte(self.pc);
-        let next_pc = if let Some(instruction) = Instruction::from_bytes(instruction_byte) {
-            self.execute(instruction)
-        } else {
-            // improve that to avoid crash
-            panic!("Unkown instruction found at 0x{:X}", instruction_byte);
-        };
-        self.pc = next_pc;
     }
-    fn execute(&mut self, ins: Instruction) -> u16 {
-        match ins {
-            Instruction::ADD(target) => match target {
-                /*
-                ArithmeticTarget::C => {
-                    let val = self.registers.c;
-                    let new_val = self.add(val);
-                    self.registers.a = new_val;
-                    self.pc.wrapping_add(1)
-                }*/
-                _ => {
-                    unimplemented!();
-                }
-            },
-            Instruction::NOP => self.pc.wrapping_add(1),
-            Instruction::HALT => {
-                self.is_halted = true;
-                self.pc.wrapping_add(1)
-            }
-            _ => {
-                unimplemented!();
-            }
-        }
-    }
+
     fn add(&mut self, val: u8) -> u8 {
         let (new_val, did_overflow) = self.registers.a.overflowing_add(val);
         self.registers.f.set_zero(new_val == 0);

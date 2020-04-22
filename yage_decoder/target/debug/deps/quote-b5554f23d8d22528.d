@@ -1,0 +1,13 @@
+/home/teo/projects/yage/yage_derive/target/debug/deps/quote-b5554f23d8d22528.rmeta: /home/teo/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.3/src/lib.rs /home/teo/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.3/src/ext.rs /home/teo/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.3/src/format.rs /home/teo/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.3/src/ident_fragment.rs /home/teo/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.3/src/to_tokens.rs /home/teo/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.3/src/runtime.rs /home/teo/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.3/src/spanned.rs
+
+/home/teo/projects/yage/yage_derive/target/debug/deps/libquote-b5554f23d8d22528.rlib: /home/teo/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.3/src/lib.rs /home/teo/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.3/src/ext.rs /home/teo/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.3/src/format.rs /home/teo/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.3/src/ident_fragment.rs /home/teo/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.3/src/to_tokens.rs /home/teo/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.3/src/runtime.rs /home/teo/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.3/src/spanned.rs
+
+/home/teo/projects/yage/yage_derive/target/debug/deps/quote-b5554f23d8d22528.d: /home/teo/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.3/src/lib.rs /home/teo/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.3/src/ext.rs /home/teo/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.3/src/format.rs /home/teo/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.3/src/ident_fragment.rs /home/teo/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.3/src/to_tokens.rs /home/teo/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.3/src/runtime.rs /home/teo/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.3/src/spanned.rs
+
+/home/teo/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.3/src/lib.rs:
+/home/teo/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.3/src/ext.rs:
+/home/teo/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.3/src/format.rs:
+/home/teo/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.3/src/ident_fragment.rs:
+/home/teo/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.3/src/to_tokens.rs:
+/home/teo/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.3/src/runtime.rs:
+/home/teo/.cargo/registry/src/github.com-1ecc6299db9ec823/quote-1.0.3/src/spanned.rs:
