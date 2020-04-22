@@ -1,6 +1,5 @@
 # Yet Another Gameboy Emulator
 ヤゲ is a gameboy emulator written in Rust with the only purpose of learning console homebrew.
-For now, the project uses somes experimental features so you will need to build and test with `rust nightly toolchain`
 */!\ Very early development /!\*
 
 ## Development

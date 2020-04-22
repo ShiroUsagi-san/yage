@@ -79,7 +79,7 @@ impl Parse for Argument {
         }
     }
 }
-/// #[declare_instruction(opcode=0xff, regs=[], lenght=2, cycles=8, flags=[]]
+/// #[declare_instruction(opcode=0xff, regs=[], lenght=2, cycles=8, flags=[]])
 #[proc_macro_attribute]
 pub fn declare_instruction(args: TokenStream, item: TokenStream) -> TokenStream {
     let args = parse_macro_input!(args as Argument);
