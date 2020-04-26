@@ -14,14 +14,14 @@ const CARRY_FLAG_SHIFT: u8 = 0;
 pub struct CpuRegisters(pub [u8; 8]);
 
 pub enum Register {
-    A,
-    F,
-    B,
-    C,
-    D,
-    E,
-    H,
-    L,
+    A = 0,
+    F = 1,
+    B = 2,
+    C = 3,
+    D = 4,
+    E = 5,
+    H = 6,
+    L = 7,
 }
 pub enum ExtendRegister {
     AF,
@@ -33,46 +33,46 @@ impl CpuRegisters {
     pub fn new() -> Self {
         CpuRegisters([0; 8])
     }
+
     pub fn get_reg(&self, reg: Register) -> u8 {
-        match reg {
-            Register::A => self.0[0],
-            Register::F => self.0[1],
-            Register::B => self.0[2],
-            Register::C => self.0[3],
-            Register::D => self.0[4],
-            Register::E => self.0[5],
-            Register::H => self.0[6],
-            Register::L => self.0[7],
-        }
+        self.0[reg as usize]
     }
+
     pub fn get_extend_reg(&self, reg: ExtendRegister) -> u16 {
         match reg {
-            ExtendRegister::AF => (self.0[0] << 8) as u16 | self.0[1] as u16,
-            ExtendRegister::BC => (self.0[2] << 8) as u16 | self.0[3] as u16,
-            ExtendRegister::DE => (self.0[4] << 8) as u16 | self.0[5] as u16,
-            ExtendRegister::HL => (self.0[6] << 8) as u16 | self.0[7] as u16,
+            ExtendRegister::AF => self.get_shared(Register::A, Register::F),
+            ExtendRegister::BC => self.get_shared(Register::B, Register::C),
+            ExtendRegister::DE => self.get_shared(Register::D, Register::E),
+            ExtendRegister::HL => self.get_shared(Register::H, Register::L)
         }
     }
+
     pub fn is_zero(&self) -> bool {
         self.0[1] & ZERO_FLAG_MASK != 0
     }
+
     pub fn is_substraction(&self) -> bool {
         self.0[1] & SUBSTRACTION_FLAG_MASK != 0
     }
+
     pub fn is_half_carry(&self) -> bool {
         self.0[1] & HALF_CARRY_FLAG_MASK != 0
     }
+
     pub fn is_carry(&self) -> bool {
         self.0[1] & CARRY_FLAG_MASK != 0
     }
+
     pub fn set_zero(&mut self, toggle: bool) {
         let offset = 0b1 << ZERO_FLAG_SHIFT;
         &self.toggle_flag(toggle, offset);
     }
+
     pub fn set_substraction(&mut self, toggle: bool) {
         let offset = 0b1 << SUBSTRACTION_FLAG_SHIFT;
         &self.toggle_flag(toggle, offset);
     }
+
     pub fn set_half_carry(&mut self, toggle: bool) {
         let offset = 0b1 << HALF_CARRY_FLAG_SHIFT;
         &self.toggle_flag(toggle, offset);
@@ -81,6 +81,10 @@ impl CpuRegisters {
     pub fn set_carry(&mut self, toggle: bool) {
         let offset = 0b1 << CARRY_FLAG_SHIFT;
         &self.toggle_flag(toggle, offset);
+    }
+
+    fn get_shared(&self, reg1: Register, reg2: Register) -> u16 {
+        (self.0[reg1 as usize] << 8) as u16 | self.0[reg2 as usize] as u16
     }
 
     fn toggle_flag(&mut self, toggle: bool, offset: u8) {
