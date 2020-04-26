@@ -1,8 +1,7 @@
-use crate::cpu::register::Registers;
+use crate::cpu::register::CpuRegisters;
 
 pub struct Cpu {
-    registers: Registers,
-    flags: u8,
+    registers: CpuRegisters,
     memory: MemoryBus,
     sp: u8,
     pc: u16,
@@ -28,16 +27,5 @@ impl Cpu {
         if self.is_halted {
             return;
         }
-    }
-
-    fn add(&mut self, val: u8) -> u8 {
-        let (new_val, did_overflow) = self.registers.a.overflowing_add(val);
-        self.registers.f.set_zero(new_val == 0);
-        self.registers.f.set_substraction(false);
-        self.registers.f.set_carry(did_overflow);
-        self.registers
-            .f
-            .set_half_carry((self.registers.a & 0xf) + (val & 0xf) > 0xf);
-        new_val
     }
 }

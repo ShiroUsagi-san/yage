@@ -11,57 +11,59 @@ const HALF_CARRY_FLAG_SHIFT: u8 = 1;
 const CARRY_FLAG_SHIFT: u8 = 0;
 
 #[derive(PartialEq, Debug)]
-pub struct Registers {
-    pub a: u8,
-    pub f: FlagsRegister,
-    pub b: u8,
-    pub c: u8,
-    pub d: u8,
-    pub e: u8,
-    pub h: u8,
-    pub l: u8,
+pub struct CpuRegisters(pub [u8; 8]);
+
+pub enum Register {
+    A,
+    F,
+    B,
+    C,
+    D,
+    E,
+    H,
+    L,
 }
-
-#[derive(Copy, Clone, PartialEq)]
-pub struct FlagsRegister(pub u8);
-
-impl std::convert::From<FlagsRegister> for u8 {
-    fn from(flag: FlagsRegister) -> u8 {
-        flag.0
+pub enum ExtendRegister {
+    AF,
+    BC,
+    DE,
+    HL,
+}
+impl CpuRegisters {
+    pub fn new() -> Self {
+        CpuRegisters([0; 8])
     }
-}
-
-impl std::convert::From<u8> for FlagsRegister {
-    fn from(flag: u8) -> FlagsRegister {
-        FlagsRegister(flag)
+    pub fn get_reg(&self, reg: Register) -> u8 {
+        match reg {
+            Register::A => self.0[0],
+            Register::F => self.0[1],
+            Register::B => self.0[2],
+            Register::C => self.0[3],
+            Register::D => self.0[4],
+            Register::E => self.0[5],
+            Register::H => self.0[6],
+            Register::L => self.0[7],
+        }
     }
-}
-
-impl fmt::Debug for FlagsRegister {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        writeln!(f, "{:b}", self.0);
-        writeln!(f, "ZERO FLAG: {}", self.is_zero());
-        writeln!(f, "SUBSTRACTION FLAG: {}", self.is_substraction());
-        writeln!(f, "HALF CARRY FLAG: {}", self.is_half_carry());
-        writeln!(f, "CARRY FLAG: {}", self.is_carry())
-    }
-}
-
-impl FlagsRegister {
-    pub fn new() -> FlagsRegister {
-        FlagsRegister(0)
+    pub fn get_extend_reg(&self, reg: ExtendRegister) -> u16 {
+        match reg {
+            ExtendRegister::AF => (self.0[0] << 8) as u16 | self.0[1] as u16,
+            ExtendRegister::BC => (self.0[2] << 8) as u16 | self.0[3] as u16,
+            ExtendRegister::DE => (self.0[4] << 8) as u16 | self.0[5] as u16,
+            ExtendRegister::HL => (self.0[6] << 8) as u16 | self.0[7] as u16,
+        }
     }
     pub fn is_zero(&self) -> bool {
-        self.0 & ZERO_FLAG_MASK != 0
+        self.0[1] & ZERO_FLAG_MASK != 0
     }
     pub fn is_substraction(&self) -> bool {
-        self.0 & SUBSTRACTION_FLAG_MASK != 0
+        self.0[1] & SUBSTRACTION_FLAG_MASK != 0
     }
     pub fn is_half_carry(&self) -> bool {
-        self.0 & HALF_CARRY_FLAG_MASK != 0
+        self.0[1] & HALF_CARRY_FLAG_MASK != 0
     }
     pub fn is_carry(&self) -> bool {
-        self.0 & CARRY_FLAG_MASK != 0
+        self.0[1] & CARRY_FLAG_MASK != 0
     }
     pub fn set_zero(&mut self, toggle: bool) {
         let offset = 0b1 << ZERO_FLAG_SHIFT;
@@ -82,60 +84,10 @@ impl FlagsRegister {
     }
 
     fn toggle_flag(&mut self, toggle: bool, offset: u8) {
-        self.0 = if toggle {
-            self.0 | offset
+        self.0[1] = if toggle {
+            self.0[1] | offset
         } else {
-            self.0 & !offset
+            self.0[1] & !offset
         };
-    }
-}
-
-impl Registers {
-    pub fn new() -> Self {
-        Registers {
-            a: 0,
-            f: FlagsRegister::new(),
-            b: 0,
-            c: 0,
-            d: 0,
-            e: 0,
-            h: 0,
-            l: 0,
-        }
-    }
-    // TODO: Avoid repetition on this part later
-    pub fn get_bc(&self) -> u16 {
-        ((self.b as u16) << 8 | self.c as u16) as u16
-    }
-
-    pub fn set_bc(&mut self, value: u16) {
-        self.b = ((value & 0xff00) >> 8) as u8;
-        self.c = (value & 0xff) as u8;
-    }
-
-    pub fn get_af(&self) -> u16 {
-        ((self.a as u16) << 8 | u8::from(self.f) as u16) as u16
-    }
-
-    pub fn set_af(&mut self, value: u16) {
-        self.a = ((value & 0xff00) >> 8) as u8;
-        self.f = ((value & 0xff) as u8).into();
-    }
-    pub fn get_de(&self) -> u16 {
-        ((self.d as u16) << 8 | self.e as u16) as u16
-    }
-
-    pub fn set_de(&mut self, value: u16) {
-        self.d = ((value & 0xff00) >> 8) as u8;
-        self.e = (value & 0xff) as u8;
-    }
-
-    pub fn get_hl(&self) -> u16 {
-        ((self.h as u16) << 8 | self.l as u16) as u16
-    }
-
-    pub fn set_hl(&mut self, value: u16) {
-        self.h = ((value & 0xff00) >> 8) as u8;
-        self.l = (value & 0xff) as u8;
     }
 }
